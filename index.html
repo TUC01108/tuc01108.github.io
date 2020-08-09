@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Card Game</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-</head>
-<body>
-    
-</body>
+    <head>
+        <title>Search</title>
+        
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-nav">
+                <a id="link-item" href="images.html">Google Image Search</a>
+                <a id="link-item" href="advanced.html">Google Advanced Search</a>
+            </div>
+        </div>
+        <img class="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png">
+        <div class="mainSearch">
+            <form action="https://google.com/search">
+                <input class="inputbubble" type="text" name="q">
+                <br>
+                <button class="buttonM">
+                <input class="searchbutton" name="btnK" type="submit" value="Google Search">
+                </button>
+                <button class="buttonL">
+                    <input class="luckybutton" name="btnI" type="submit" value="I'm Feeling Lucky">
+                </button>
+            </form>
+        </div>
+    </body>
 </html>
