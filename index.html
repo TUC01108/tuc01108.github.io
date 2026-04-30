@@ -1,147 +1,910 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Thomas Winter">
+  <meta name="description" content="Thomas Winter — Lead AI Engineer. Agentic AI systems, RAG pipelines, full-stack development, and cloud architecture for North American businesses.">
+  <title>Thomas Winter — AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d0f;
+      --bg2: #0f1419;
+      --bg3: #141b22;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --text: #e8e4dc;
+      --text2: #8a8880;
+      --text3: #5a5856;
+      --accent: #c8a96e;
+      --accent2: #8fb8a8;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Cormorant Garamond', serif;
+      --sans: 'Instrument Sans', sans-serif;
+    }
 
-    <meta name="author" content="Thomas Winter">
-    <meta name="twitter:creator" content="@winterdotc" />
-    <title>Thomas Winter: Projects</title>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <link rel="icon" href="https://media.licdn.com/dms/image/v2/D5603AQHYDblMReShqQ/profile-displayphoto-shrink_800_800/B56ZjsF.WQHMAc-/0/1756307650111?e=1759363200&v=beta&t=vxUCQyJ2llunZVLpaCOiBGu7nUbKWM8f98XSbJXGR7A">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    html { scroll-behavior: smooth; }
 
-    <style>
-        table span.badge {
-            float: right;
-            margin-left: 8px;
-        }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(10,13,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text2);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .hero-grid-line:nth-child(1) { left: 25%; }
+    .hero-grid-line:nth-child(2) { left: 50%; }
+    .hero-grid-line:nth-child(3) { left: 75%; }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.1s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(4rem, 9vw, 8.5rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.25s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text2);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.55s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border2);
+      color: var(--text2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--text2);
+      color: var(--text);
+    }
+
+    .hero-location {
+      position: absolute;
+      right: 0; bottom: 3rem;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      letter-spacing: 0.15em;
+      writing-mode: vertical-rl;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s forwards;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 7rem 2.5rem;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text2);
+      margin-bottom: 1.25rem;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-photo {
+      position: relative;
+    }
+
+    .about-photo img {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top;
+      filter: grayscale(20%) contrast(1.05);
+      display: block;
+    }
+
+    .about-photo::before {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      right: 16px; bottom: 16px;
+      border: 1px solid var(--border2);
+      z-index: -1;
+    }
+
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, var(--bg2));
+      pointer-events: none;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+
+    .stat {
+      background: var(--bg2);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* EXPERIENCE */
+    #experience {
+      background: var(--bg);
+    }
+
+    .exp-list { border-top: 1px solid var(--border); }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 2.5rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+      align-items: start;
+    }
+
+    .exp-item:hover {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin: 0 -1rem;
+      background: var(--bg2);
+    }
+
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      letter-spacing: 0.05em;
+      padding-top: 4px;
+    }
+
+    .exp-company {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .exp-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .exp-desc {
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 10px;
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tag-accent {
+      border-color: rgba(200,169,110,0.3);
+      color: var(--accent);
+    }
+
+    /* SKILLS */
+    #skills {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+
+    .skill-group-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-item {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text2);
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .skill-item:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contact-email {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--text);
+      text-decoration: none;
+      display: inline-block;
+      margin: 2rem 0 3rem;
+      border-bottom: 1px solid var(--border2);
+      padding-bottom: 1rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact-email:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-link::before {
+      content: '↗';
+      font-size: 12px;
+    }
+
+    .contact-link:hover { color: var(--text); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--border2), transparent);
+      margin: 0 auto 3rem;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 4rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-photo { order: -1; }
+      .about-photo img { max-width: 200px; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      .exp-num { display: none; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
+<body>
 
-<body class="" role="document">
-    <br />
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-md-3 col-xl-2">
-                <div class="card mb-3">
-                <a href="/">
-                    <img class="card-img-top" src="https://media.licdn.com/dms/image/v2/D5603AQHYDblMReShqQ/profile-displayphoto-shrink_800_800/B56ZjsF.WQHMAc-/0/1756307650111?e=1759363200&v=beta&t=vxUCQyJ2llunZVLpaCOiBGu7nUbKWM8f98XSbJXGR7A" alt="Thomas Winter"/>
-                </a>
-                  <div class="card-body mb-0 pb-1">
-                    <p class="card-text text-center">
-                        <b>Thomas Winter</b><br>
-                        <small>Hilo, HI<br>
-                        <a href="mailto:thomas@forsaeti.com">thomas@forsaeti.com</a><br>
-                        <a href="https://www.linkedin.com/in/etw3728" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a>
-                        </small>
-                    </p>
-                  </div>
-                  <div class="text-center mb-3">
-                      <a href="/bio.html">Bio <i class="fa fa-arrow-right"></i></a>
-                  </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <b>About Me</b>
-                        <p>
-                            Software Developer with strong experience across Java, Python, JavaScript, and TypeScript. 
-                            Proven track record in leading full-stack development, cloud migration, and scalable solution delivery for businesses of all sizes.
-                            Passionate about leveraging AI tools, secure architectures, and modern DevOps to boost efficiency and product quality.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-9 col-xl-10">
-                <div class="row">
-                    <div class="col-12">
-                        <h1>Projects & Experience</h1>
-                        <div class="text-center">
-                            <span class="badge badge-primary">Java</span>
-                            <span class="badge badge-success">Angular</span>
-                            <span class="badge badge-dark">Testing</span>
-                            <span class="badge badge-warning">Other</span>
-                            <span class="badge badge-secondary">AWS</span>
-                            <span class="badge badge-info">Python</span>
-                            <span class="badge badge-danger">Leadership</span>
-                            <span class="badge badge-info">AI/ML</span>
-                        </div>
-                        <br />
-                        <div class="table-responsive">
-                            <table class="table table-condensed table-hover table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Name/Role</th>
-                                        <th>Period</th>
-                                        <th>Highlights</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <b>Forsaeti</b> <span class="badge badge-secondary">Lead Software Engineer</span>
-                                        </td>
-                                        <td>Dec 2024 – Present</td>
-                                        <td>
-                                            Custom software & AI solutions for North American clients. Led teams in design, coding, and deployment of secure, scalable apps. Focus on AI-driven development, documentation, and operations.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <b>CNA National</b> <span class="badge badge-primary">Software Engineer</span>
-                                        </td>
-                                        <td>Nov 2022 – Dec 2024</td>
-                                        <td>
-                                            Led client portal upgrade (Java, Angular, Drupal, AWS). Built scalable microservices and improved app performance. Migrated Angular 6→18; integrated OKTA authentication.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <b>Infosys</b> <span class="badge badge-info">Java Developer</span>
-                                        </td>
-                                        <td>Dec 2021 – Nov 2022</td>
-                                        <td>
-                                            Led AWS migration; developed cloud-first Java/Python solutions. Improved reliability, scalability, and analytics integration.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <b>Propagate Content / Fuse Media</b> <span class="badge badge-warning">Production Manager</span>
-                                        </td>
-                                        <td>Jul 2017 – Dec 2021</td>
-                                        <td>
-                                            Managed $2M+ projects and teams; drove efficiency and collaboration in content production.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <b>Open Source Projects</b>
-                                        </td>
-                                        <td>Ongoing</td>
-                                        <td>
-                                            <a href="https://github.com/TUC01108?tab=repositories" target="_blank">
-                                                <i class="fa fa-github"></i> My Github Portfolio
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="mt-4">
-                                <b>Technical Skills:</b><br>
-                                Java, Python, JavaScript, TypeScript, Angular, React, Vue.js, Spring, Node.js, AWS, GCP, Docker, Jenkins, SQL/NoSQL, AI/ML, Agile, CI/CD, and more.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <br />
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">TW</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:thomas@forsaeti.com" class="btn btn-outline" style="padding:8px 18px;font-size:10px;">Hire Me</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-line"></div>
+    <div class="hero-grid-line"></div>
+    <div class="hero-grid-line"></div>
+
+    <div class="hero-inner">
+      <p class="hero-tag">Available for contract work · Remote</p>
+      <h1 class="hero-name">Thomas<br><em>Winter</em></h1>
+      <p class="hero-title">Lead AI & Full-Stack Engineer</p>
+      <p class="hero-desc">
+        I build agentic AI systems, RAG pipelines, and full-stack applications for North American businesses — from multi-agent automation to cloud-native backends. Based in Hilo, Hawaiʻi.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Get in touch</a>
+        <a href="#experience" class="btn btn-outline">View experience</a>
+      </div>
     </div>
+
+    <span class="hero-location">Hilo, Hawaiʻi · Available now</span>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p class="section-label">About</p>
+          <h2 class="section-title">AI systems<br>engineer &<br><em>builder</em></h2>
+          <p>
+            I'm a Lead AI Engineer with <strong>5+ years of professional experience</strong> building production-grade agentic systems, RAG pipelines, and full-stack applications for enterprise clients.
+          </p>
+          <p>
+            At Forsaeti I've shipped multi-agent systems that automated <strong>85% of customer workflows</strong>, saved 1,200+ engineering hours annually, and delivered <strong>$250K in client value</strong> in a single quarter — using LangChain, Ollama, and local LLM inference on real production traffic.
+          </p>
+          <p>
+            Before going independent, I spent two years at <strong>CNA National</strong> leading Java/Angular enterprise modernization and a full AWS microservices migration at <strong>Infosys</strong>. I own the full stack — from agent design to frontend to deployment.
+          </p>
+          <p>
+            I operate through my consultancy <strong>Forsaeti</strong>. Clear communication, honest scoping, no ghost jobs.
+          </p>
+          <div style="margin-top:2rem;">
+            <a href="mailto:thomas@forsaeti.com" class="btn btn-primary">thomas@forsaeti.com</a>
+          </div>
+        </div>
+        <div class="about-photo reveal" style="transition-delay:0.15s">
+          <img src="./photo.jpg" alt="Thomas Winter">
+        </div>
+      </div>
+
+      <div class="stats-row reveal" style="transition-delay:0.3s">
+        <div class="stat">
+          <span class="stat-num">85%</span>
+          <span class="stat-label">Workflows automated</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">$250K</span>
+          <span class="stat-label">Client value, Q1</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">1,200+</span>
+          <span class="stat-label">Eng. hours saved / yr</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label reveal">Experience</p>
+      <h2 class="section-title reveal">Where I've<br><em>shipped</em></h2>
+
+      <div class="exp-list">
+
+        <div class="exp-item reveal">
+          <div class="exp-period">Dec 2024 — Present</div>
+          <div>
+            <div class="exp-company">Forsaeti</div>
+            <div class="exp-role">Lead AI Engineer · Founder</div>
+            <p class="exp-desc">
+              Architected production multi-agent systems using LangChain + Ollama that automated 85% of customer workflows — saving 1,200+ engineering hours annually across 300+ employees. Deployed RAG-powered agents with Llama 3.2 (Q4 quantized) cutting reporting cycles from 2 days to 15 minutes. Engineered hybrid pipelines combining GPT-4o with local inference (Phi-3/Gemma 2), achieving 25 tokens/sec on CPU-only for edge deployments. Delivered 3 production AI agents in Q1 generating $250K in direct client value.
+            </p>
+            <div class="exp-tags">
+              <span class="tag tag-accent">Current</span>
+              <span class="tag">LangChain</span>
+              <span class="tag">Ollama</span>
+              <span class="tag">RAG</span>
+              <span class="tag">Llama 3.2</span>
+              <span class="tag">GPT-4o</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">React</span>
+              <span class="tag">AWS Bedrock</span>
+              <span class="tag">Docker</span>
+            </div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">01</div>
+        </div>
+
+        <div class="exp-item reveal">
+          <div class="exp-period">Nov 2022 — Dec 2024</div>
+          <div>
+            <div class="exp-company">CNA National</div>
+            <div class="exp-role">Software Engineer</div>
+            <p class="exp-desc">
+              Led client portal upgrade across Java, Angular, Drupal, and AWS. Built Spring Boot microservices handling 5,000+ daily requests, boosting revenue 15%. Completed Angular 6→18 migration, integrated OKTA auth, and optimized bundle sizes for improved rendering and security.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">Java</span>
+              <span class="tag">Spring Boot</span>
+              <span class="tag">Angular 6→18</span>
+              <span class="tag">AWS</span>
+              <span class="tag">Microservices</span>
+              <span class="tag">OKTA</span>
+              <span class="tag">TypeScript</span>
+            </div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">02</div>
+        </div>
+
+        <div class="exp-item reveal">
+          <div class="exp-period">Dec 2021 — Nov 2022</div>
+          <div>
+            <div class="exp-company">Infosys</div>
+            <div class="exp-role">Java Developer</div>
+            <p class="exp-desc">
+              Led AWS cloud migration for large-scale systems — cutting downtime 40% and supporting 50% traffic growth. Built Java/Spring Boot/Hibernate features boosting analytics integration 30%, with full Agile SDLC ownership from requirements through deployment.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">Java</span>
+              <span class="tag">Spring Boot</span>
+              <span class="tag">Python</span>
+              <span class="tag">AWS</span>
+              <span class="tag">Hibernate</span>
+              <span class="tag">Cloud Migration</span>
+            </div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">03</div>
+        </div>
+
+        <div class="exp-item reveal">
+          <div class="exp-period">Jul 2017 — Dec 2021</div>
+          <div>
+            <div class="exp-company">Propagate Content<br><span style="font-size:1rem;color:var(--text2)">/ Fuse Media</span></div>
+            <div class="exp-role">Production Manager</div>
+            <p class="exp-desc">
+              Managed $2M+ projects and cross-functional teams in content production. Drove process efficiency, collaboration systems, and delivery across large-scale media operations.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">Project Management</span>
+              <span class="tag">$2M+ budgets</span>
+              <span class="tag">Team Leadership</span>
+            </div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">04</div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:2.5rem;" class="reveal">
+        <a href="https://github.com/TUC01108?tab=repositories" target="_blank" class="btn btn-outline">
+          ↗ View GitHub Portfolio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label reveal">Skills</p>
+      <h2 class="section-title reveal">What I<br><em>work with</em></h2>
+
+      <div class="skills-grid">
+        <div class="reveal">
+          <p class="skill-group-label">Agentic AI & LLMs</p>
+          <div class="skill-items">
+            <span class="skill-item">LangChain</span>
+            <span class="skill-item">LlamaIndex</span>
+            <span class="skill-item">Ollama</span>
+            <span class="skill-item">RAG Pipelines</span>
+            <span class="skill-item">Multi-Agent Systems</span>
+            <span class="skill-item">Tool-Calling Agents</span>
+            <span class="skill-item">ReAct Architecture</span>
+            <span class="skill-item">Prompt Engineering</span>
+            <span class="skill-item">Function Calling</span>
+            <span class="skill-item">Hugging Face</span>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay:0.1s">
+          <p class="skill-group-label">AI Models & Infra</p>
+          <div class="skill-items">
+            <span class="skill-item">GPT-4o</span>
+            <span class="skill-item">Llama 3.2 / 3.1</span>
+            <span class="skill-item">Phi-3</span>
+            <span class="skill-item">Gemma 2</span>
+            <span class="skill-item">Q4/Q5 Quantization</span>
+            <span class="skill-item">Local Inference</span>
+            <span class="skill-item">LangSmith</span>
+            <span class="skill-item">Chroma</span>
+            <span class="skill-item">Pinecone</span>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay:0.15s">
+          <p class="skill-group-label">Full-Stack</p>
+          <div class="skill-items">
+            <span class="skill-item">React</span>
+            <span class="skill-item">Angular</span>
+            <span class="skill-item">TypeScript</span>
+            <span class="skill-item">Vue.js</span>
+            <span class="skill-item">Java / Spring Boot</span>
+            <span class="skill-item">Python / FastAPI</span>
+            <span class="skill-item">Node.js</span>
+            <span class="skill-item">PostgreSQL</span>
+            <span class="skill-item">MongoDB</span>
+            <span class="skill-item">GraphQL</span>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay:0.2s">
+          <p class="skill-group-label">Cloud & DevOps</p>
+          <div class="skill-items">
+            <span class="skill-item">AWS Bedrock</span>
+            <span class="skill-item">AWS Lambda</span>
+            <span class="skill-item">GCP</span>
+            <span class="skill-item">Docker</span>
+            <span class="skill-item">Kubernetes</span>
+            <span class="skill-item">Terraform</span>
+            <span class="skill-item">GitHub Actions</span>
+            <span class="skill-item">Jenkins</span>
+            <span class="skill-item">CI/CD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="divider reveal"></div>
+        <p class="section-label reveal" style="justify-content:center">Contact</p>
+        <h2 class="section-title reveal" style="margin-bottom:0">Let's work<br><em>together</em></h2>
+        <a href="mailto:thomas@forsaeti.com" class="contact-email reveal">
+          thomas@forsaeti.com
+        </a>
+        <div class="contact-links reveal">
+          <a href="https://www.linkedin.com/in/etw3728" target="_blank" class="contact-link">LinkedIn</a>
+          <a href="https://github.com/TUC01108" target="_blank" class="contact-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Thomas Winter · Forsaeti</p>
+    <p>Hilo, Hawaiʻi · Available for remote contract</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth active nav
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--text)' : '';
+      });
+    });
+  </script>
 </body>
 </html>
